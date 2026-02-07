@@ -1,0 +1,122 @@
+/* Container Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 20px;
+}
+
+/* Individual Card */
+.student-profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eaecf0;
+  padding: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.student-profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header: Avatar & Info */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  background: #f4f3ff;
+  color: #7f56d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: 1px solid #d6bbfb;
+}
+
+.info h4 {
+  margin: 0;
+  color: #101828;
+  font-size: 1.1rem;
+}
+
+.info p {
+  margin: 2px 0 0;
+  color: #667085;
+  font-size: 0.875rem;
+}
+
+/* Subject Progress Section */
+.grade-section h5 {
+  margin: 0 0 16px 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #98a2b3;
+}
+
+.subject-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 40px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.subject-row span {
+  font-size: 0.875rem;
+  color: #344054;
+  font-weight: 500;
+}
+
+/* Progress Bar Logic */
+.progress-bar {
+  height: 8px;
+  background: #f2f4f7;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: #7f56d9; /* The purple theme */
+  border-radius: 4px;
+  transition: width 0.5s ease-out;
+}
+
+.score {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #101828;
+  text-align: right;
+}
+
+/* Footer: Average Score */
+.card-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f2f4f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: #667085;
+}
+
+.value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #7f56d9;
+}

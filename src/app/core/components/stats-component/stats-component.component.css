@@ -1,0 +1,10 @@
+.stats-bar {
+  display: flex;
+  justify-content: space-around;
+  background: var(--white);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--primary);
+}
