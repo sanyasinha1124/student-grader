@@ -6,21 +6,14 @@ import { GradeFormComponent } from "./core/components/grade-form-component/grade
 import { StudentService } from './shared/services/student/student.service';
 import { Student } from './student.model';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AddStudentComponent, StudentListComponent, StatsComponent, GradeFormComponent, CommonModule],
+  imports: [AddStudentComponent, StudentListComponent, StatsComponent, GradeFormComponent, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
   template: `
-    <!-- <header><h1>Student Management System</h1></header>
-    <main>
-      <app-stats></app-stats>
-      <app-add-student></app-add-student>
-      <app-student-list></app-student-list>
-
-      <app-grade-form (onAdd)="onAddGrade.emit({ studentId: student.id, grade: $event })">
-</app-grade-form>
-    </main> -->
-
+  
+<!-- 
     <header>
   <h1>Student Management System</h1>
 </header>
@@ -33,15 +26,36 @@ import { CommonModule } from '@angular/common';
   
   <hr>
 
-  <section *ngIf="(studentService.students$ | async) as studentList">
-  <div *ngFor="let student of studentList">
-    <app-grade-form 
-      (onAdd)="studentService.addGrade(student.id, $any($event))">
-    </app-grade-form>
+  
+</main> -->
+
+<header class="app-header">
+  <h1>ScholarSystem <span class="badge">Pro</span></h1>
+</header>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <div class="nav-links">
+      <a routerLink="/list" routerLinkActive="active-link">
+        <i class="icon-dashboard"></i> Dashboard
+      </a>
+      <a routerLink="/cards" routerLinkActive="active-link">
+        <i class="icon-cards"></i> Card View
+      </a>
+      <a routerLink="/enroll" routerLinkActive="active-link">
+        <i class="icon-plus"></i> New Enrollment
+      </a>
+    </div>
   </div>
-</section>
+</nav>
+
+<main class="page-container">
+  <app-stats></app-stats>
+
+  <router-outlet></router-outlet>
 </main>
-  `
+  `,
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   student: Student[] = [];

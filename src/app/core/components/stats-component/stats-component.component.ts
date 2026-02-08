@@ -32,7 +32,9 @@ import { Student } from '../../../student.model';
   standalone: true,
   imports: [CommonModule],
   template: `
+   
     <div class="stats-container" *ngIf="(service.students$ | async) as list">
+       <h2>Class Stats :  </h2>
       <div class="stats-card">
         <h3>Class Overview</h3>
         <p><strong>Total Students:</strong> {{ list.length }}</p>

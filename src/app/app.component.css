@@ -1,4 +1,4 @@
-.student-grid {
+/* .student-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
@@ -47,7 +47,7 @@
 .nav-brand {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #7f56d9; /* Modern purple brand color */
+  color: #7f56d9; 
 }
 
 .nav-links a {
@@ -59,7 +59,7 @@
   transition: 0.2s;
 }
 
-/* This is applied automatically by routerLinkActive */
+
 .nav-links a.active {
   background-color: #f4f3ff;
   color: #7f56d9;
@@ -69,4 +69,109 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #2d3436;
+  color: white;
+}
+
+.nav-links a {
+  color: #dfe6e9;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+
+.active-link {
+  background: #2ecc71;
+  color: white !important;
+  font-weight: bold;
+}
+
+.page-container {
+  padding: 20px;
+} */
+
+:host {
+  display: block;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: #2d3436;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  background: #2ecc71;
+  padding: 2px 6px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.main-nav {
+  background: white;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-links a {
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: #636e72;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-links a:hover {
+  color: #2ecc71;
+  background: #f9f9f9;
+}
+
+/* The magic class applied by routerLinkActive */
+.active-link {
+  color: #2ecc71 !important;
+  border-bottom: 3px solid #2ecc71 !important;
+  background: rgba(46, 204, 113, 0.05);
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }

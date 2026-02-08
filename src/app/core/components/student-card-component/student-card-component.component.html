@@ -1,1 +1,82 @@
-<p>student-card-component works!</p>
+<div class="detail-wrapper" *ngIf="student">
+  <div class="nav-header">
+    <button routerLink="/list" class="btn-back">← Back to Dashboard</button>
+    <div class="action-btns">
+      <button (click)="toggleEdit()" class="btn-edit">
+        {{ isEditing ? 'Save Profile' : 'Edit Info' }}
+      </button>
+      <button (click)="deleteThisStudent()" class="btn-danger">Delete</button>
+    </div>
+  </div>
+
+  <div class="main-card">
+    <div class="profile-side">
+      <div class="avatar-large" [style.background-color]="getHealthColor(student.average)">
+        {{ student.name[0] }}
+      </div>
+      
+      <div class="info-block">
+        <label>Student Name</label>
+        <h2 *ngIf="!isEditing">{{ student.name }}</h2>
+        <input *ngIf="isEditing" [(ngModel)]="student.name" class="edit-input">
+        
+        <label>Email Address</label>
+        <p *ngIf="!isEditing">{{ student.email }}</p>
+        <input *ngIf="isEditing" [(ngModel)]="student.email" class="edit-input">
+      </div>
+
+      <div class="stats-box">
+        <div class="stat">
+          <span class="label">GPA</span>
+          <span class="value">{{ student.average | number:'1.1-1' }}%</span>
+        </div>
+        <div class="stat">
+          <span class="label">Letter</span>
+          <span class="value badge">{{ student.average | letterGradePipe }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-side">
+      <h3>Academic Progress</h3>
+      <div class="progress-bar-container">
+        <div class="progress-fill" 
+             [style.width.%]="student.average"
+             [style.background-color]="getHealthColor(student.average)">
+        </div>
+      </div>
+
+      <div class="history-section">
+        <div class="section-header">
+          <h4>Grade History</h4>
+          <span>{{ student.grades.length }} Total Entries</span>
+        </div>
+
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Subject</th>
+              <th>Type</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let g of student.grades">
+              <td>{{ g.date | date:'shortDate' }}</td>
+              <td>{{ g.subject }}</td>
+              <td><span class="type-tag">{{ g.type }}</span></td>
+              <td class="score-cell" [style.color]="getHealthColor(g.score)">
+                {{ g.score }}%
+              </td>
+            </tr>
+            <tr *ngIf="student.grades.length === 0">
+              <td colspan="4" class="empty-row">No academic records found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

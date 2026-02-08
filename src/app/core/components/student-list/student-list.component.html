@@ -24,11 +24,17 @@
       </thead>
       <tbody>
         <tr *ngFor="let s of students | filterByName: searchTerm; trackBy: trackById">
-          <td class="name-col">
+          <!-- <td class="name-col">
             <div class="primary-text">{{s.name}}</div>
             <div class="secondary-text">{{s.email}}</div>
-          </td>
+          </td> -->
 
+          <td class="name-col">
+  <a [routerLink]="['/student', s.id]" class="student-link">
+    <div class="primary-text">{{s.name}}</div>
+    <div class="secondary-text">{{s.email}}</div>
+  </a>
+</td>
           <td class="date-col">
             <span class="date-label">{{s.enrollmentDate | date:'mediumDate'}}</span>
           </td>

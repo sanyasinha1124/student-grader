@@ -1,16 +1,25 @@
-<header style="background: #333; color: white; padding: 1rem; text-align: center;">
-  <h1>{{ title }}</h1>
+<header class="app-header">
+  <h1>ScholarSystem <span class="badge">Pro</span></h1>
 </header>
 
-<nav class="navbar">
-  <div class="nav-brand">EduTrack Pro</div>
-  <div class="nav-links">
-    <a routerLink="/enroll" routerLinkActive="active">Enroll</a>
-    <a routerLink="/list" routerLinkActive="active">Table View</a>
-    <a routerLink="/cards" routerLinkActive="active">Card View</a>
+<nav class="main-nav">
+  <div class="nav-container">
+    <div class="nav-links">
+      <a routerLink="/list" routerLinkActive="active-link">
+        <i class="icon-dashboard"></i> Dashboard
+      </a>
+      <a routerLink="/cards" routerLinkActive="active-link">
+        <i class="icon-cards"></i> Card View
+      </a>
+      <a routerLink="/enroll" routerLinkActive="active-link">
+        <i class="icon-plus"></i> New Enrollment
+      </a>
+    </div>
   </div>
 </nav>
 
-<main class="content-area">
+<main class="page-container">
+  <app-stats></app-stats>
+
   <router-outlet></router-outlet>
 </main>

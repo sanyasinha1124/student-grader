@@ -13,13 +13,14 @@ import { GradeCalculatorService } from '../../../shared/services/gradeCalulator/
 import { Student } from '../../../student.model';
 import { LetterGradePipePipe } from '../../../shared/pipes/LetterGradePipe/letter-grade-pipe.pipe';
 import { FilterByPerformancePipe } from '../../../shared/pipes/filterByPerformance/filter-by-performance.pipe';
+import { RouterLink } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [CommonModule, StudentCardComponent, FilterByNamePipe,FilterByPerformancePipe,  FormsModule,LetterGradePipePipe],
+  imports: [CommonModule, StudentCardComponent,FilterByPerformancePipe,FilterByNamePipe,  FormsModule,LetterGradePipePipe,RouterLink],
   templateUrl: './student-list.component.html',
   styleUrls: ['./student-list.component.css']
 })
