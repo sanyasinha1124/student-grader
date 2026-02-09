@@ -1,6 +1,5 @@
 
-
-// //parent component
+ //parent component
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,6 +16,7 @@ import { RouterLink } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-student-list',
   standalone: true,
@@ -26,15 +26,16 @@ import { RouterLink } from '@angular/router';
 })
 export class StudentListComponent {
   student: Student[] = [];
-  searchTerm = '';
+ 
 
+
+  searchTerm = '';
+  performanceFilter = 'All'; // Initialize the filter state
   constructor(
     public studentService: StudentService,
     public gradeService: GradeCalculatorService
   ) {}
 
-  // We use the already calculated 'average' property from the student object
-  // instead of re-calculating it every time the UI renders.
   getAvgColor(avg: number | undefined): string {
     const val = avg || 0;
     if (val >= 85) return '#2ecc71'; // Green
@@ -45,13 +46,13 @@ export class StudentListComponent {
   submitQuickGrade(studentId: number, subjRef: HTMLInputElement, scoreRef: HTMLInputElement) {
     const scoreVal = Number(scoreRef.value);
     
-    // Simple validation
+   
     if (subjRef.value.trim() && !isNaN(scoreVal) && scoreVal >= 0) {
       const grade = {
         subject: subjRef.value,
         score: scoreVal,
         date: new Date(),
-        type: 'assignment' as const // Type cast to match your Grade interface
+        type: 'assignment' as const // Type cast to match  Grade interface
       };
       
       this.studentService.addGrade(studentId, grade);
@@ -71,6 +72,6 @@ export class StudentListComponent {
       this.studentService.deleteStudent(id); 
     }
   }
-  //filter as good,bad
+ 
  
 }

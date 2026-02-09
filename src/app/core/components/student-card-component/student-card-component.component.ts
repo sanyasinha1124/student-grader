@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -14,8 +14,11 @@ import { LetterGradePipePipe } from '../../../shared/pipes/LetterGradePipe/lette
   styleUrls: ['./student-card-component.component.css']
 })
 export class StudentCardComponent implements OnInit {
-  student?: Student;
+  // student?: Student;
+  @Input() student?: Student; // Add this line!
+  @Output() onDelete = new EventEmitter<number>(); // Add this to notify parent of deletions
   isEditing = false;
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -23,19 +26,37 @@ export class StudentCardComponent implements OnInit {
     private studentService: StudentService
   ) {}
 
-  ngOnInit() {
-    // Grab the ID from the URL (e.g., /student/1)
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+  // ngOnInit() {
+  //   // Grab the ID from the URL (e.g., /student/1)
+  //   const id = Number(this.route.snapshot.paramMap.get('id'));
     
+  //   this.studentService.students$.subscribe(students => {
+  //     this.student = students.find(s => s.id === id);
+  //     // If student not found, redirect back to list
+  //     if (!this.student && id) {
+  //       this.router.navigate(['/list']);
+  //     }
+  //   });
+  // }
+  ngOnInit() {
+  // 1. Check if student was ALREADY provided by the parent @for loop
+  if (this.student) {
+    return; // Stop here! Don't look at the URL.
+  }
+
+  // 2. Only if 'this.student' is empty, look at the URL (Detail View mode)
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  
+  if (id) {
     this.studentService.students$.subscribe(students => {
       this.student = students.find(s => s.id === id);
-      // If student not found, redirect back to list
-      if (!this.student && id) {
-        this.router.navigate(['/list']);
+      
+      if (!this.student) {
+        this.router.navigate(['/cards']); // Updated to go back to cards
       }
     });
   }
-
+}
   toggleEdit() {
     this.isEditing = !this.isEditing;
   }

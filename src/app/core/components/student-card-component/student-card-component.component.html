@@ -1,82 +1,70 @@
-<div class="detail-wrapper" *ngIf="student">
-  <div class="nav-header">
-    <button routerLink="/list" class="btn-back">← Back to Dashboard</button>
-    <div class="action-btns">
-      <button (click)="toggleEdit()" class="btn-edit">
-        {{ isEditing ? 'Save Profile' : 'Edit Info' }}
-      </button>
-      <button (click)="deleteThisStudent()" class="btn-danger">Delete</button>
-    </div>
-  </div>
-
-  <div class="main-card">
-    <div class="profile-side">
-      <div class="avatar-large" [style.background-color]="getHealthColor(student.average)">
-        {{ student.name[0] }}
-      </div>
-      
-      <div class="info-block">
-        <label>Student Name</label>
-        <h2 *ngIf="!isEditing">{{ student.name }}</h2>
-        <input *ngIf="isEditing" [(ngModel)]="student.name" class="edit-input">
-        
-        <label>Email Address</label>
-        <p *ngIf="!isEditing">{{ student.email }}</p>
-        <input *ngIf="isEditing" [(ngModel)]="student.email" class="edit-input">
-      </div>
-
-      <div class="stats-box">
-        <div class="stat">
-          <span class="label">GPA</span>
-          <span class="value">{{ student.average | number:'1.1-1' }}%</span>
-        </div>
-        <div class="stat">
-          <span class="label">Letter</span>
-          <span class="value badge">{{ student.average | letterGradePipe }}</span>
-        </div>
+@if (student; as s) {
+  <div class="card-container" [style.border-top-color]="getHealthColor(s.average)">
+    
+    <div class="card-header">
+      <span class="grade-badge" [style.background-color]="getHealthColor(s.average)">
+        {{ s.average | letterGradePipe }}
+      </span>
+      <div class="actions">
+        <button class="btn-icon edit" (click)="toggleEdit()" title="Edit Student">
+          {{ isEditing ? '💾' : '✏️' }}
+        </button>
+        <button class="btn-icon delete" (click)="deleteThisStudent()" title="Delete Student">
+          🗑️
+        </button>
       </div>
     </div>
 
-    <div class="content-side">
-      <h3>Academic Progress</h3>
-      <div class="progress-bar-container">
+    <div class="profile-section">
+      <div class="avatar" 
+           [style.background-color]="getHealthColor(s.average) + '20'" 
+           [style.color]="getHealthColor(s.average)">
+        {{ s.name ? s.name[0] : '?' }}
+      </div>
+
+      <div class="info">
+        @if (!isEditing) {
+          <h3 class="student-name">{{ s.name }}</h3>
+          <p class="student-email">{{ s.email }}</p>
+        } @else {
+          <div class="edit-form">
+            <input [(ngModel)]="s.name" placeholder="Name" class="input-field">
+            <input [(ngModel)]="student!.email" placeholder="Email" class="input-field">
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-label">Average</span>
+        <span class="stat-value" [style.color]="getHealthColor(s.average)">
+          {{ s.average | number:'1.1-1' }}%
+        </span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Assignments</span>
+        <span class="stat-value">{{ s.grades?.length || 0 }}</span>
+      </div>
+    </div>
+
+    <div class="progress-wrapper">
+      <div class="progress-bg">
         <div class="progress-fill" 
-             [style.width.%]="student.average"
-             [style.background-color]="getHealthColor(student.average)">
+             [style.width.%]="s.average" 
+             [style.background-color]="getHealthColor(s.average)">
         </div>
-      </div>
-
-      <div class="history-section">
-        <div class="section-header">
-          <h4>Grade History</h4>
-          <span>{{ student.grades.length }} Total Entries</span>
-        </div>
-
-        <table class="history-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Subject</th>
-              <th>Type</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let g of student.grades">
-              <td>{{ g.date | date:'shortDate' }}</td>
-              <td>{{ g.subject }}</td>
-              <td><span class="type-tag">{{ g.type }}</span></td>
-              <td class="score-cell" [style.color]="getHealthColor(g.score)">
-                {{ g.score }}%
-              </td>
-            </tr>
-            <tr *ngIf="student.grades.length === 0">
-              <td colspan="4" class="empty-row">No academic records found.</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
-  </div>
-</div>
 
+    @if (!isEditing) {
+      <a [routerLink]="['/student', s.id]" class="btn-view-profile">
+        View Full Profile →
+      </a>
+    }
+  </div>
+} @else {
+  <div class="card-container loading">
+    <p>Loading student data...</p>
+  </div>
+}

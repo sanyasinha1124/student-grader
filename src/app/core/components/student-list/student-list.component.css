@@ -305,16 +305,36 @@
   color: #636e72;
 }
 
+
+
+.controls-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
 .filter-select {
-  padding: 0.5rem 1rem;
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #dfe6e9;
-  background-color: white;
+  background: white;
   font-size: 0.9rem;
-  cursor: pointer;
+  color: #2d3436;
   outline: none;
+  cursor: pointer;
 }
 
 .filter-select:focus {
   border-color: #2ecc71;
+}
+
+/* Ensure the link looks like a link */
+.student-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.student-link:hover .primary-text {
+  color: #2ecc71;
+  text-decoration: underline;
 }
