@@ -1,27 +1,3 @@
-// import { CommonModule } from '@angular/common';
-// import { Component } from '@angular/core';
-// import { StudentService } from '../../../shared/services/student/student.service';
-// import { Student } from '../../../student.model';
-
-// @Component({
-//   selector: 'app-stats',
-//   standalone: true,
-//   imports: [CommonModule],
-//   template: `
-//     <div class="stats-bar" *ngIf="(service.students$ | async) as list">
-//       <p>Total Students: {{ list.length }}</p>
-//       <p>Class Average: {{ getClassAverage(list) }}%</p>
-//     </div>
-//   `
-// })
-// export class StatsComponent {
-//   constructor(public service: StudentService) {}
-//   getClassAverage(list: Student[]) {
-//     if (list.length === 0) return 0;
-//     return Math.round(list.reduce((acc, s) => acc + s.average, 0) / list.length);
-//   }
-// }
-
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { StudentService } from '../../../shared/services/student/student.service';
@@ -32,32 +8,72 @@ import { Student } from '../../../student.model';
   standalone: true,
   imports: [CommonModule],
   template: `
-   
-    <div class="stats-container" *ngIf="(service.students$ | async) as list">
-       <h2>Class Stats :  </h2>
-      <div class="stats-card">
-        <h3>Class Overview</h3>
-        <p><strong>Total Students:</strong> {{ list.length }}</p>
-        <p><strong>Class Average:</strong> {{ getClassAverage(list) }}%</p>
-      </div>
+    <div class="stats-page" *ngIf="(service.students$ | async) as list">
+      <header class="stats-header">
+        <h2>Class Analytics Dashboard</h2>
+        <p>Real-time performance data for {{ list.length }} students</p>
+      </header>
 
-      <div class="stats-card" *ngIf="list.length > 0">
-        <h3>Performers</h3>
-        <p>
-          <strong>Highest:</strong> 
-          {{ getTopPerformer(list)?.name }} ({{ getTopPerformer(list)?.average }}%)
-        </p>
-        <p>
-          <strong>Lowest:</strong> 
-          {{ getBottomPerformer(list)?.name }} ({{ getBottomPerformer(list)?.average }}%)
-        </p>
+      <div class="stats-grid">
+        <div class="stats-card highlight">
+          <h3>Class Overview</h3>
+          <div class="stat-row">
+            <span>Average Score</span>
+            <span class="value">{{ getClassAverage(list) }}%</span>
+          </div>
+          <div class="stat-row">
+            <span>Total Enrollment</span>
+            <span class="value">{{ list.length }}</span>
+          </div>
+        </div>
+
+        <div class="stats-card performer-top" *ngIf="getTopPerformer(list) as top">
+          <h3>🏆 Top Performer</h3>
+          <p class="performer-name">{{ top.name }}</p>
+          <p class="performer-score">{{ top.average }}% GPA</p>
+        </div>
+
+        <div class="stats-card performer-low" *ngIf="getBottomPerformer(list) as low">
+          <h3>⚠️ Needs Support</h3>
+          <p class="performer-name">{{ low.name }}</p>
+          <p class="performer-score">{{ low.average }}% GPA</p>
+        </div>
       </div>
     </div>
   `,
   styles: [`
-    .stats-container { display: flex; gap: 20px; padding: 15px; background: #f4f7f6; border-radius: 8px; }
-    .stats-card { flex: 1; border-left: 4px solid #007bff; padding-left: 15px; }
-    h3 { margin-top: 0; color: #333; font-size: 1.1rem; }
+    .stats-page { padding: 2rem; }
+    .stats-header { margin-bottom: 2rem; }
+    .stats-header h2 { color: #2c3e50; font-size: 1.8rem; margin: 0; }
+    
+    .stats-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 1.5rem; 
+    }
+
+    .stats-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-top: 4px solid #bdc3c7;
+    }
+
+    .highlight { border-top-color: #3498db; }
+    .performer-top { border-top-color: #27ae60; }
+    .performer-low { border-top-color: #e74c3c; }
+
+    .stat-row { 
+      display: flex; 
+      justify-content: space-between; 
+      margin: 10px 0;
+      font-weight: 500;
+    }
+
+    .value { color: #2c3e50; font-weight: 700; }
+    .performer-name { font-size: 1.2rem; font-weight: bold; margin: 10px 0 0; }
+    .performer-score { color: #7f8c8d; margin: 0; }
   `]
 })
 export class StatsComponent {
@@ -70,14 +86,10 @@ export class StatsComponent {
   }
 
   getTopPerformer(list: Student[]): Student | null {
-    if (list.length === 0) return null;
-    // Reduce returns the student with the maximum average
-    return list.reduce((prev, current) => (prev.average > current.average) ? prev : current);
+    return list.length ? list.reduce((prev, curr) => (prev.average > curr.average) ? prev : curr) : null;
   }
 
   getBottomPerformer(list: Student[]): Student | null {
-    if (list.length === 0) return null;
-    // Reduce returns the student with the minimum average
-    return list.reduce((prev, current) => (prev.average < current.average) ? prev : current);
+    return list.length ? list.reduce((prev, curr) => (prev.average < curr.average) ? prev : curr) : null;
   }
 }

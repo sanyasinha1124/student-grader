@@ -13,21 +13,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   imports: [AddStudentComponent, StudentListComponent, StatsComponent, GradeFormComponent, CommonModule,RouterOutlet,RouterLink,RouterLinkActive],
   template: `
   
-<!-- 
-    <header>
-  <h1>Student Management System</h1>
-</header>
 
-<main>
-  <app-stats></app-stats>
-  
-  <app-add-student></app-add-student>
-   <app-student-list></app-student-list>
-  
-  <hr>
-
-  
-</main> -->
 
 <header class="app-header">
   <h1>ScholarSystem <span class="badge">Pro</span></h1>
@@ -45,12 +31,15 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       <a routerLink="/enroll" routerLinkActive="active-link">
         <i class="icon-plus"></i> New Enrollment
       </a>
+       <a routerLink="stats" routerLinkActive="active-link">
+        <i class="icon-chart"></i> Class Stats
+      </a>
     </div>
   </div>
 </nav>
 
 <main class="page-container">
-  <app-stats></app-stats>
+  <!-- <app-stats></app-stats> -->
 
   <router-outlet></router-outlet>
 </main>
@@ -63,7 +52,7 @@ export class AppComponent {
 onAddGrade: any;
   constructor(public studentService: StudentService) {}
 
-  // Add this method to handle the event
+  // to handle the event
   handleAddGrade(event: { studentId: number; grade: any }) {
     this.studentService.addGrade(event.studentId, event.grade);
   }

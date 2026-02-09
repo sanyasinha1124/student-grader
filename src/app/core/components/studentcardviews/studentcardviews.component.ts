@@ -22,25 +22,23 @@ import { FilterByNamePipe } from '../../../shared/pipes/filter-by-name/filter-by
     </div>
   </header>
 
-  <div class="cards-grid">
-    <!-- @for (s of (studentService.students$ | async | filterByName: cardSearch); track s.id) {
-      <app-student-card 
-        [student]="s"
-        (onDelete)="handleDelete($event)">
-      </app-student-card>
-    } -->
 
-    @for (s of (studentService.students$| async); track s.id) {
-  <app-student-card [student]="s"></app-student-card> }
-    
-    @empty {
-      <div class="empty-state">
-        <div class="icon">📁</div>
-        <h3>No students found</h3>
-        <p>Try adjusting your search or enroll a new student.</p>
-      </div>
-    }
-  </div>
+
+  <div class="cards-grid">
+  @for (s of (studentService.students$ | async | filterByName: cardSearch); track s.id) {
+    <app-student-card 
+      [student]="s"
+      (onDelete)="handleDelete($event)">
+    </app-student-card>
+  } 
+  @empty {
+    <div class="empty-state">
+      <div class="icon">📁</div>
+      <h3>No students found</h3>
+      <p>Try adjusting your search or enroll a new student.</p>
+    </div>
+  }
+</div>
 </div>
   `,
   styleUrls: ['./studentcardviews.component.css']

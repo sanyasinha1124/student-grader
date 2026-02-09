@@ -140,3 +140,91 @@
   border-radius: 6px;
   font-size: 0.9rem;
 }
+
+/* 1. Full Page Mode Adjustments */
+.card-container.full-page-mode {
+  max-width: 800px;  /* Increase width for the table */
+  margin: 2rem auto; /* Center it on the page */
+  transform: none !important; /* Disable the hover jump on the profile page */
+}
+
+/* 2. Detailed Table Styles */
+.detailed-content {
+  margin-top: 25px;
+  animation: slideDown 0.4s ease-out;
+}
+
+.divider {
+  height: 1px;
+  background: #f1f1f1;
+  margin: 20px 0;
+}
+
+.detailed-content h4 {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.table-container {
+  overflow-x: auto; /* Scroll table on mobile */
+}
+
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grades-table th {
+  text-align: left;
+  padding: 12px;
+  color: #95a5a6;
+  border-bottom: 2px solid #f4f7f6;
+  font-size: 0.85rem;
+}
+
+.grades-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f9f9f9;
+  color: #2d3436;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.status-dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* 3. Back Button Styling */
+.btn-back {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border: 1px solid #dfe6e9;
+  color: #636e72;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-back:hover {
+  background: #f8f9fa;
+  border-color: #b2bec3;
+  color: #2d3436;
+}
+
+/* 4. Animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

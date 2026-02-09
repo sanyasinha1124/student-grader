@@ -1,5 +1,9 @@
+
+
 @if (student; as s) {
-  <div class="card-container" [style.border-top-color]="getHealthColor(s.average)">
+  <div class="card-container" 
+       [class.full-page-mode]="isFullView"
+       [style.border-top-color]="getHealthColor(s.average)">
     
     <div class="card-header">
       <span class="grade-badge" [style.background-color]="getHealthColor(s.average)">
@@ -29,7 +33,7 @@
         } @else {
           <div class="edit-form">
             <input [(ngModel)]="s.name" placeholder="Name" class="input-field">
-            <input [(ngModel)]="student!.email" placeholder="Email" class="input-field">
+            <input [(ngModel)]="s.email" placeholder="Email" class="input-field">
           </div>
         }
       </div>
@@ -57,7 +61,37 @@
       </div>
     </div>
 
-    @if (!isEditing) {
+    @if (isFullView) {
+      <div class="detailed-content">
+        <div class="divider"></div>
+        <h4>Assignment Breakdown</h4>
+        <div class="table-container">
+          <table class="grades-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (grade of s.grades; track $index) {
+                <tr>
+                  <td>{{ grade.subject }}</td>
+                  <td class="bold">{{ grade.score }}%</td>
+                  <td>
+                    <span class="status-dot" [style.background-color]="getHealthColor(grade.score)"></span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        
+      <button class="btn-back" routerLink="/cards">← Back to Directory</button> 
+          
+      </div>
+    } @else {
       <a [routerLink]="['/student', s.id]" class="btn-view-profile">
         View Full Profile →
       </a>
@@ -65,6 +99,7 @@
   </div>
 } @else {
   <div class="card-container loading">
-    <p>Loading student data...</p>
+    <div class="spinner"></div>
+    <p>Loading student profile...</p>
   </div>
 }

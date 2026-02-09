@@ -1,93 +1,4 @@
-<!-- <div class="dashboard-wrapper">
-  <div class="header-flex">
-    <div class="title-group">
-      <h2>Student Management</h2>
-      <p>Manage enrollments and track academic performance</p>
-    </div>
-    <div class="search-box">
-      <input #search (input)="searchTerm = search.value" placeholder="Search by name or email...">
-    </div>
-  </div>
-
-  <div class="table-container">
-    <table class="modern-table" *ngIf="(studentService.students$ | async) as students; else noStudents">
-      <thead>
-        <tr>
-          <th>Student</th>
-          <th>Enrollment</th>
-          <th>Latest Subjects</th>
-          <th>Latest Scores</th>
-          <th>Avg. Grade</th>
-          <th class="text-center">Quick Add</th>
-          <th class="text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let s of students | filterByName: searchTerm; trackBy: trackById">
-         
-
-          <td class="name-col">
-  <a [routerLink]="['/student', s.id]" class="student-link">
-    <div class="primary-text">{{s.name}}</div>
-    <div class="secondary-text">{{s.email}}</div>
-  </a>
-</td>
-          <td class="date-col">
-            <span class="date-label">{{s.enrollmentDate | date:'mediumDate'}}</span>
-          </td>
-
-          <td>
-            <div class="stack-list">
-              <div *ngFor="let g of s.grades.slice(-3)" class="item">{{g.subject}}</div>
-              <div *ngIf="s.grades.length === 0" class="empty">--</div>
-            </div>
-          </td>
-
-          <td>
-            <div class="stack-list">
-              <div *ngFor="let g of s.grades.slice(-3)" class="score-text">{{g.score}}%</div>
-              <div *ngIf="s.grades.length === 0" class="empty">--</div>
-            </div>
-          </td>
-
-          <td>
-            <div class="status-pill" [style.background-color]="getAvgColor(s.average) + '15'"
-              [style.color]="getAvgColor(s.average)">
-              <span class="dot" [style.background-color]="getAvgColor(s.average)"></span>
-              {{s.average || 0 | number:'1.0-0'}}%
-            </div>
-          </td>
-
-          <td>
-            <div class="quick-add-group">
-              <input #subj type="text" placeholder="Subject" class="table-input">
-              <input #score type="number" placeholder="%" class="table-input score-input">
-              <button class="icon-add" (click)="submitQuickGrade(s.id, subj, score)">+</button>
-            </div>
-          </td>
-          <td>
-            <span class="letter-badge" [style.background-color]="getAvgColor(s.average)">
-              {{ s.average | letterGradePipe }}
-            </span>
-          </td>
-
-          <td class="text-right">
-            <button class="btn-delete" (click)="handleDelete(s.id)">
-              <i class="trash-icon"></i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<ng-template #noStudents>
-  <div class="empty-state">
-    <h3>No students found</h3>
-    <p>Start by enrolling a new student to the system.</p>
-  </div>
-</ng-template> -->
+<!-- 
 
 <div class="dashboard-wrapper">
   <div class="header-flex">
@@ -183,6 +94,118 @@
             <button class="btn-delete" (click)="handleDelete(s.id)">
               <i class="trash-icon"></i> Delete
             </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #noStudents>
+  <div class="empty-state">
+    <h3>No students found</h3>
+    <p>Try adjusting your filters or enroll a new student.</p>
+  </div>
+</ng-template> -->
+
+<div class="dashboard-wrapper">
+  <div class="header-flex">
+    <div class="title-group">
+      <h2>Student Management</h2>
+      <p>Manage enrollments and track academic performance</p>
+    </div>
+    
+    <div class="controls-group">
+      <div class="filter-box">
+        <select [(ngModel)]="performanceFilter" class="filter-select">
+          <option value="All">All Performance</option>
+          <option value="Excellent">Excellent (90%+)</option>
+          <option value="Good">Good (75-89%)</option>
+          <option value="Developing">Developing (60-74%)</option>
+          <option value="Poor">Poor (< 60%)</option>
+        </select>
+      </div>
+
+      <div class="search-box">
+        <input #search (input)="searchTerm = search.value" placeholder="Search by name or email...">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="modern-table" *ngIf="(studentService.students$ | async) as students; else noStudents">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Enrollment</th>
+          <th>Latest Subjects</th>
+          <th>Latest Scores</th>
+          <th>Avg. Grade</th>
+          <th class="text-center">Quick Add</th>
+          <th>Grade</th> 
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of students 
+                  | filterByName: searchTerm 
+                  | filterByPerformance: performanceFilter; 
+                  trackBy: trackById">
+          
+          <td class="name-col">
+            <div class="primary-text">{{s.name}}</div>
+            <div class="secondary-text">{{s.email}}</div>
+          </td>
+
+          <td class="date-col">
+            <span class="date-label">{{s.enrollmentDate | date:'mediumDate'}}</span>
+          </td>
+
+          <td>
+            <div class="stack-list">
+              <div *ngFor="let g of s.grades.slice(-3)" class="item">{{g.subject}}</div>
+              <div *ngIf="s.grades.length === 0" class="empty">--</div>
+            </div>
+          </td>
+
+          <td>
+            <div class="stack-list">
+              <div *ngFor="let g of s.grades.slice(-3)" class="score-text">{{g.score}}%</div>
+              <div *ngIf="s.grades.length === 0" class="empty">--</div>
+            </div>
+          </td>
+
+          <td>
+            <div class="status-pill" [style.background-color]="getAvgColor(s.average) + '15'"
+              [style.color]="getAvgColor(s.average)">
+              <span class="dot" [style.background-color]="getAvgColor(s.average)"></span>
+              {{s.average || 0 | number:'1.0-0'}}%
+            </div>
+          </td>
+
+          <td>
+            <div class="quick-add-group">
+              <input #subj type="text" placeholder="Subject" class="table-input">
+              <input #score type="number" placeholder="%" class="table-input score-input">
+              <button class="icon-add" (click)="submitQuickGrade(s.id, subj, score)">+</button>
+            </div>
+          </td>
+
+          <td>
+            <span class="letter-badge" [style.background-color]="getAvgColor(s.average)">
+              {{ s.average | letterGradePipe }}
+            </span>
+          </td>
+
+          <td class="text-right">
+            <div class="action-buttons">
+              <a [routerLink]="['/student', s.id]" class="btn-view-details">
+                View Details
+              </a>
+              <button class="btn-delete" (click)="handleDelete(s.id)">
+                Delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

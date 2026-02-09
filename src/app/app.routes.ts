@@ -4,6 +4,7 @@ import { StudentListComponent } from './core/components/student-list/student-lis
 
 import { StudentCardComponent } from './core/components/student-card-component/student-card-component.component';
 import { StudentcardviewsComponent } from './core/components/studentcardviews/studentcardviews.component';
+import { StatsComponent } from './core/components/stats-component/stats-component.component';
 
 export const routes: Routes = [
   // When the user clicks "Card View", load the VIEW/GRID component
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'student/:id', component: StudentCardComponent },
    { path: 'enroll', component: AddStudentComponent },
   { path: 'list', component: StudentListComponent },
-  { path: '', redirectTo: '/cards', pathMatch: 'full' }
+   { path: 'stats', component: StatsComponent},
+  { path: '', redirectTo: '/list', pathMatch: 'full' }
 ];
 
